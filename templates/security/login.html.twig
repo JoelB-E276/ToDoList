@@ -3,9 +3,9 @@
 {% block title %}Log in{% endblock %}
 
 {% block body %}
-<main class="col-5 my-4 text-center">
+<main class="d-flex justify-content-evenly my-5 col-10">
 
-<form method="post" class="">
+<form method="post" class="float-start col-3 mt-5">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -16,7 +16,7 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Vos identifiants</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Vos identifiants </h1>
     <label for="inputEmail">Email</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
     <label for="inputPassword">Password</label>
@@ -40,9 +40,9 @@
     <button class="btn btn-dark my-2" type="submit">
         Entrez
     </button>
-    <a><img class="loginlogo"src="{{ asset('doc/img/block/bl(4).png') }}" alt="block Not logo" style="max-width: 100%"></a>
+    
 
 </form>
-
+<a><img class="loginlogo float-end col-5 mt-0"src="{{ asset('doc/img/block/bl(4).png') }}" alt="block Not logo" style="max-width: 100%"></a>
 </main>
 {% endblock %}
