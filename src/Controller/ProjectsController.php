@@ -6,19 +6,21 @@ use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 // Permet l'accès si authentifié
 /**
  * @IsGranted("IS_AUTHENTICATED_FULLY")
  */
 
-class ProjectController extends AbstractController
+#[Route('/projects')]
+class ProjectsController extends AbstractController
 {
-    #[Route('/', name: 'projects', methods: ['GET'])]
+    #[Route('/', name: 'projects_index', methods: ['GET'])]
     public function index(ProjectRepository $projectRepository): Response
     {
         return $this->render('projects/index.html.twig', [

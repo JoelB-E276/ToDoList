@@ -23,7 +23,7 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
-                 target: app_login
+                # target: app_login
                 # Change la route pour redig vers login apres déco
 
             # activate different ways to authenticate

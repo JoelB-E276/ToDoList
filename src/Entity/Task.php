@@ -48,6 +48,12 @@ class Task
      */
     private $Project;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="Task")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $project;
+
     public function getId(): ?int
     {
         return $this->id;

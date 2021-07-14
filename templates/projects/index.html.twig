@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Project index{% endblock %}
+
+{% block body %}
+    <h1>Project index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Beginning</th>
+                <th>Status</th>
+                <th>End</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Archived</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+            <tr>
+                <td>{{ project.id }}</td>
+                <td>{{ project.beginning ? project.beginning|date('Y-m-d') : '' }}</td>
+                <td>{{ project.status }}</td>
+                <td>{{ project.end ? project.end|date('Y-m-d') : '' }}</td>
+                <td>{{ project.title }}</td>
+                <td>{{ project.content }}</td>
+                <td>{{ project.archived }}</td>
+
+
+                <td>
+                    <a href="{{ path('projects_show', {'id': project.id}) }}">show</a>
+                    <a href="{{ path('projects_edit', {'id': project.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+      {% for project in projects %}
+            <section class="project">
+                <div>Début : {{ project.beginning ? project.beginning|date('d-m-Y') : '' }}</div>
+                <div>Status : {{ project.status }}</div>
+                <div>Achèvement : {{ project.end ? project.end|date('d-m-Y') : '' }}</div>
+                <div>Type : {{ project.title }}</div>
+                <div>Déscription : {{ project.content }}</div>
+                <div>Archivé : {{ project.archived }}</div>
+                <div>
+                    <a href="{{ path('projects_show', {'id': project.id}) }}">show</a>
+                    <a href="{{ path('projects_edit', {'id': project.id}) }}">edit</a>
+                </div>
+            </section>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+         </section>
+
+        {% endfor %}
+
+              <a href="{{ path('projects_new') }}">Create new</a>
+        {% endblock %}
