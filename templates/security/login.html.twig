@@ -3,9 +3,9 @@
 {% block title %}Log in{% endblock %}
 
 {% block body %}
-<main class="d-flex justify-content-evenly my-5 col-10">
+<main class="row my-5">
 
-<form method="post" class="float-start col-3 mt-5">
+<form method="post" class="col-3 mt-5">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -43,6 +43,6 @@
     
 
 </form>
-<a><img class="loginlogo float-end col-5 mt-0"src="{{ asset('doc/img/block/bl(4).png') }}" alt="block Not logo" style="max-width: 100%"></a>
+<div class="col-3"><img class="loginlogo mt-0"src="{{ asset('doc/img/block/bl(4).png') }}" alt="block Not logo" style="max-width: 100%"></div>
 </main>
 {% endblock %}

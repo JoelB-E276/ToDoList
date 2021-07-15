@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Project;
+use App\Entity\Task;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
+use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,13 +20,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ProjectController extends AbstractController
 {
-    #[Route('/', name: 'projects', methods: ['GET'])]
-    public function index(ProjectRepository $projectRepository): Response
+    // Affiche les projets de l'util connecté
+    #[Route('/', name: 'projects', methods: ['GET','POST'])]
+    public function index(ProjectRepository $projectRepository, Request $request): Response
     {
+
+        $projects = $this->getUser()->getProjects();
+
         return $this->render('projects/index.html.twig', [
-            'projects' => $projectRepository->findAll(),
+            'projects' => $projects,
         ]);
     }
+
+
 
     #[Route('/new', name: 'projects_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
@@ -48,14 +56,24 @@ class ProjectController extends AbstractController
     }
 
 
-
+    //affiche les détails du projet et les tâche associées
     #[Route('/{id}', name: 'projects_show', methods: ['GET'])]
-    public function show(Project $project): Response
+    public function show(Project $project, TaskRepository $TaskRepository, int $id): Response
     {
+        dd($TaskRepository);
+        $tasks = $TaskRepository->find($id);
+    
         return $this->render('projects/show.html.twig', [
             'project' => $project,
+            'tasks' => $tasks,
+
         ]);
     }
+
+
+
+
+
 
     #[Route('/{id}/edit', name: 'projects_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Project $project): Response

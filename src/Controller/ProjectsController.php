@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Form\ProjectType;
+use App\Repository\TaskRepository;
 use App\Repository\ProjectRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 // Permet l'accès si authentifié
@@ -52,10 +53,14 @@ class ProjectsController extends AbstractController
 
 
     #[Route('/{id}', name: 'projects_show', methods: ['GET'])]
-    public function show(Project $project): Response
+    public function show(Project $project, TaskRepository $TaskRepository, int $id): Response
     {
+        $tasks = $TaskRepository->find( getTask());
+    
         return $this->render('projects/show.html.twig', [
             'project' => $project,
+            'tasks' => $tasks,
+
         ]);
     }
 

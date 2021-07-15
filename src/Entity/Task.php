@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Repository\UsersRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -43,13 +45,7 @@ class Task
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Project::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Project;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="Task")
+     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="tasks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $project;
@@ -121,12 +117,12 @@ class Task
 
     public function getProject(): ?Project
     {
-        return $this->Project;
+        return $this->project;
     }
 
-    public function setProject(?Project $Project): self
+    public function setProject(?Project $project): self
     {
-        $this->Project = $Project;
+        $this->project = $project;
 
         return $this;
     }

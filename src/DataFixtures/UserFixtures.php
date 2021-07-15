@@ -34,4 +34,5 @@ class UserFixtures extends Fixture
         $this->addReference("Philippe", $user);
 
     }
+    
 }

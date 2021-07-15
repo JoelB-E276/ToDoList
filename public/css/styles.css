@@ -1,5 +1,5 @@
 body{
-    background-color:rgb(190, 190, 190);
+    background-color:rgb(248, 248, 248);
 }
 
 img.img-fluid:nth-child(1){
@@ -17,11 +17,11 @@ html body div.container section.project{
 
 @media screen and (min-width: 200px) and (max-width: 640px) {
 img.img-fluid:nth-child(1){
-     width: 35vw;
+     max-width: 35vw;
 }
 img.img-fluid:nth-child(2){
-    width: 30vw;
-    height: 18vh;
+   max-width: 30vw;
+   max-height: 18vh;
 
 }
 }

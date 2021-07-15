@@ -5,13 +5,14 @@ namespace App\DataFixtures;
 use DateTime;
 use App\Entity\Users;
 use App\Entity\Project;
+use App\DataFixtures\UserFixtures;
 use Symfony\Config\SecurityConfig;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class ProjectsFixtures extends Fixture
+class ProjectsFixtures extends Fixture  implements DependentFixtureInterface
 {
      
 
@@ -26,7 +27,7 @@ class ProjectsFixtures extends Fixture
            $project1->setContent("Huisserie + 4 x Fenêtre coulissante Aluminium 115X120 cm blanc, 2 vantaux gauche/droite ");
            $project1->setArchived("non");
           // Pour faire référence à user de la précédente fixture
-           $project1->setUsers($this->getReference('Philippe', $project1));
+           $project1->setUsers($this->getReference('Philippe'));
         
            $manager->persist($project1);
 
@@ -37,7 +38,7 @@ class ProjectsFixtures extends Fixture
            $project2->setTitle("Porte Mme Margelle");
            $project2->setContent(" Porte d'entrée Bois chêne Borgo Premium H.215 x l.90 cm pleine , poussant droit ");
            $project2->setArchived("non");
-           $project2->setUsers($this->getReference('Philippe', $project2));
+           $project2->setUsers($this->getReference('Philippe'));
 
            $manager->persist($project2);
 
@@ -48,7 +49,7 @@ class ProjectsFixtures extends Fixture
            $project3->setTitle("Sol Mme & Dupré");
            $project3->setContent(" Plancher brut en pin maritime, long. 200cm x larg. 14.5cm x Ep. 21mm ");
            $project3->setArchived("non");
-           $project3->setUsers($this->getReference('Philippe', $project3));
+           $project3->setUsers($this->getReference('Philippe'));
 
            $manager->persist($project3);
 
@@ -59,7 +60,7 @@ class ProjectsFixtures extends Fixture
     public function getDependencies()
     {
         return [
-            UsersFixtures::class,
+            UserFixtures::class,
         ];
     }
 }

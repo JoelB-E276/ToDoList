@@ -46,7 +46,7 @@
 
 
       {% for project in projects %}
-            <section class="project">
+            <section class="project shadow-lg p-3 mb-5 bg-body rounded">
                 <div>Début : {{ project.beginning ? project.beginning|date('d-m-Y') : '' }}</div>
                 <div>Status : {{ project.status }}</div>
                 <div>Achèvement : {{ project.end ? project.end|date('d-m-Y') : '' }}</div>

@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use App\Repository\ProjectRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -46,6 +49,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $lastname;
+     /**
+     * @ORM\OneToMany(targetEntity=Project::class, mappedBy="Users", orphanRemoval=true)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $projects;
 
     public function getId(): ?int
     {
@@ -156,6 +164,36 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Project[]
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProjects(Project $project): self
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects[] = $project;
+            $project->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): self
+    {
+        if ($this->Task->removeElement($project)) {
+            // set the owning side to null (unless already changed)
+            if ($project->getUsers() === $this) {
+                $project->setUsers(null);
+            }
+        }
 
         return $this;
     }

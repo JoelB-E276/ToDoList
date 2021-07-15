@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Repository\UsersRepository;
+use App\Repository\TaskRepository;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -57,8 +59,9 @@ class Project
 
     /**
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="project", orphanRemoval=true)
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $Task;
+    private $tasks;
 
     public function __construct()
     {
@@ -159,13 +162,13 @@ class Project
      */
     public function getTask(): Collection
     {
-        return $this->Task;
+        return $this->tasks;
     }
 
     public function addTask(Task $task): self
     {
-        if (!$this->Task->contains($task)) {
-            $this->Task[] = $task;
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
             $task->setProject($this);
         }
 
