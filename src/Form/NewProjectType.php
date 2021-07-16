@@ -9,26 +9,40 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 
-class ProjectType extends AbstractType
+class NewProjectType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+        
             ->add('beginning', DateType::class, array(
                 'label' => "Modifier la date de commencement",
                 'widget' => 'single_text'))
             ->add('end', DateType::class, array(
-                'label' => "Modifier la date d'achèvement",
+                'label' => "Date d'achèvement",
                 'widget' => 'single_text'))
             ->add('title', null, [
                 'label' => "Type"])
             ->add('content', null, [
                   'label' => "Déscription"])
+            ->add('status', ChoiceType::class, [
+                    'choices'  => [
+                        'En cours' => 'En cours',
+                        'Terminé' => 'Terminé',
+                    ],
+                ])
+            ->add('archived', ChoiceType::class, [
+                    'choices'  => [
+                        'Non' => 'non',
+                        'Oui' => 'oui',
+                        
+                    ],
+                ])    
 
-                  //Ajouter dropdown pour achiver
-            ->add('Modifier', SubmitType::class, [
+            ->add('Ajouter', SubmitType::class, [
                     'row_attr' => ['class' => 'text-center']
                 ],)  
         ;

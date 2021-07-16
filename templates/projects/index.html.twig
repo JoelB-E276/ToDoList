@@ -3,50 +3,25 @@
 {% block title %}Project index{% endblock %}
 
 {% block body %}
-    <h1>Project index</h1>
+    <div class="row justify-content-center">
+         <h1 class="my-4 col-4">Vos projets en cours</h1>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Beginning</th>
-                <th>Status</th>
-                <th>End</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Archived</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for project in projects %}
-            <tr>
-                <td>{{ project.id }}</td>
-                <td>{{ project.beginning ? project.beginning|date('Y-m-d') : '' }}</td>
-                <td>{{ project.status }}</td>
-                <td>{{ project.end ? project.end|date('Y-m-d') : '' }}</td>
-                <td>{{ project.title }}</td>
-                <td>{{ project.content }}</td>
-                <td>{{ project.archived }}</td>
-
-
-                <td>
-                    <a href="{{ path('projects_show', {'id': project.id}) }}">show</a>
-                    <a href="{{ path('projects_edit', {'id': project.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
+{#      Pour afficher les message Flash de l'util en session
+ #}    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
-
-
+    {% endfor %}
 
       {% for project in projects %}
-            <section class="project shadow-lg p-3 mb-5 bg-body rounded">
+            <section class="projecthome shadow-lg p-3 mb-5 bg-body rounded">
+                <form method="post" action="{{ path('projects_delete', {'id': project.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ project.id) }}">
+                    <button class="btn btn-outline-danger float-end">Supprimer</button>
+                </form>
                 <div>Début : {{ project.beginning ? project.beginning|date('d-m-Y') : '' }}</div>
                 <div>Status : {{ project.status }}</div>
                 <div>Achèvement : {{ project.end ? project.end|date('d-m-Y') : '' }}</div>
@@ -54,17 +29,18 @@
                 <div>Déscription : {{ project.content }}</div>
                 <div>Archivé : {{ project.archived }}</div>
                 <div>
-                    <a href="{{ path('projects_show', {'id': project.id}) }}">show</a>
-                    <a href="{{ path('projects_edit', {'id': project.id}) }}">edit</a>
+                    <a class="btn btn-outline-dark" href="{{ path('projects_show', {'id': project.id}) }}">Détails & tâches</a>
+                    <a class="btn btn-outline-dark" href="{{ path('projects_edit', {'id': project.id}) }}">Modifier projet</a>
                 </div>
+                
             </section>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="8">Pas de projet en cours</td>
             </tr>
          </section>
 
         {% endfor %}
+        <a class="btn btn-outline-dark col-4 " href="{{ path('projects_new') }}">Ajouter un nouveau projet</a>
 
-              <a href="{{ path('projects_new') }}">Create new</a>
-        {% endblock %}
+     {% endblock %}

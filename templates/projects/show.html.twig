@@ -3,52 +3,42 @@
 {% block title %}Project{% endblock %}
 
 {% block body %}
-    <h1>Project</h1>
+    <h1 class="my-4 text-center">Détails du projet</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ project.id }}</td>
-            </tr>
-            <tr>
-                <th>Beginning</th>
-                <td>{{ project.beginning ? project.beginning|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ project.status }}</td>
-            </tr>
-            <tr>
-                <th>End</th>
-                <td>{{ project.end ? project.end|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ project.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ project.content }}</td>
-            </tr>
-            <tr>
-                <th>Archived</th>
-                <td>{{ project.archived }}</td>
-            </tr>
-        </tbody>
-    </table>
+         <section class="projecthome shadow-lg p-3 mb-5 bg-body rounded">
+                <form method="post" action="{{ path('projects_delete', {'id': project.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ project.id) }}">
+                    <button class="btn btn-outline-danger float-end">Supprimer projet</button>
+                </form>
+                <div>Début : {{ project.beginning ? project.beginning|date('d-m-Y') : '' }}</div>
+                <div>Status : {{ project.status }}</div>
+                <div>Achèvement : {{ project.end ? project.end|date('d-m-Y') : '' }}</div>
+                <div>Type : {{ project.title }}</div>
+                <div>Déscription : {{ project.content }}</div>
+                <div>Archivé : {{ project.archived }}</div>
+                <div>
+                    <a class="btn btn-outline-dark" href="{{ path('projects_edit', {'id': project.id}) }}">Modifier projet</a>
+                </div>
+                
+            </section>
+
+    <h2 class="text-center">Tâche associé</h2>
 
        {% for task in tasks %}
-            <section class="project shadow-lg p-3 mb-5 bg-body rounded">
+            <section class="task shadow-lg p-3 mb-5 bg-body rounded secondary" id="task">
+              <form method="post" action="{{ path('projects_delete', {'id': task.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.id) }}">
+                    <button class="btn btn-outline-danger float-end">Supprimer tâche</button>
+                </form>
                 <div>Début : {{ task.beginning ? task.beginning|date('d-m-Y') : '' }}</div>
                 <div>Status : {{ task.status }}</div>
                 <div>Achèvement : {{ task.end ? task.end|date('d-m-Y') : '' }}</div>
                 <div>Type : {{ task.title }}</div>
                 <div>Déscription : {{ task.content }}</div>
                 <div>
-                    <a href="{{ path('projects_show', {'id':task.id}) }}">show</a>
-                    <a href="{{ path('projects_edit', {'id': task.id}) }}">edit</a>
-                </div>
+                   {#  <a href="{{ path('projects_show', {'id':task.id}) }}">show</a> #}
+{#                     <a class="btn btn-outline-dark" href="{{ path('task_edit', {'id': task.id}) }}">Modifier la tâche</a>
+ #}                </div>
             </section>
         {% else %}
             <tr>
@@ -57,11 +47,12 @@
          </section> 
 
         {% endfor %}
+   {#      <a class="btn btn-outline-dark" href="{{ path('task_edit', {'id': task.id}) }}"></a>
 
 
     <a href="{{ path('projects_index') }}">back to list</a>
 
     <a href="{{ path('projects_edit', {'id': project.id}) }}">edit</a>
 
-    {{ include('projects/_delete_form.html.twig') }}
+    {{ include('projects/_delete_form.html.twig') }} #}
 {% endblock %} 

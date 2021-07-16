@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Project;
+use App\Entity\task;
+use App\Entity\User;
 use App\Form\ProjectType;
+use App\Form\NewProjectType;
 use App\Repository\TaskRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,17 +32,26 @@ class ProjectsController extends AbstractController
         ]);
     }
 
+
+    // Création d'un projet
     #[Route('/new', name: 'projects_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $project = new Project();
-        $form = $this->createForm(ProjectType::class, $project);
+        $form = $this->createForm(NewProjectType::class, $project);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            $project->setUsers($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($project);
             $entityManager->flush();
+            $this->addFlash(
+                "success",
+                "Votre projet a été ajouté"
+            );
+
 
             return $this->redirectToRoute('projects_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -51,11 +63,12 @@ class ProjectsController extends AbstractController
     }
 
 
+    // Afficher projets et tâches associées 
 
     #[Route('/{id}', name: 'projects_show', methods: ['GET'])]
     public function show(Project $project, TaskRepository $TaskRepository, int $id): Response
     {
-        $tasks = $TaskRepository->find( getTask());
+        $tasks = $project->getTask();
     
         return $this->render('projects/show.html.twig', [
             'project' => $project,
@@ -64,14 +77,27 @@ class ProjectsController extends AbstractController
         ]);
     }
 
+
+
+    // Modifier un projet
     #[Route('/{id}/edit', name: 'projects_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Project $project): Response
+    public function edit(ProjectRepository $projectRepository, Request $request, Project $project, int $id): Response
     {
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            $project->setStatus("en cours");
+            $project->setArchived("non");
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($project);
+            $entityManager->flush();
+            $this->addFlash(
+                "success",
+                "Votre projet a bien été modifié"
+            );
+
 
             return $this->redirectToRoute('projects_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -82,6 +108,8 @@ class ProjectsController extends AbstractController
         ]);
     }
 
+
+    //Supprimer un projet
     #[Route('/{id}', name: 'projects_delete', methods: ['POST'])]
     public function delete(Request $request, Project $project): Response
     {
@@ -89,6 +117,10 @@ class ProjectsController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($project);
             $entityManager->flush();
+            $this->addFlash(
+                "success",
+                "Projet définitivement supprimé"
+            );
         }
 
         return $this->redirectToRoute('projects_index', [], Response::HTTP_SEE_OTHER);

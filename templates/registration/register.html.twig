@@ -3,8 +3,9 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-
+ <main class="register">
+    <h1 class="text-center my-4">Créez votre compte</h1>
+    <div class="row col-5">
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.firstname) }}
         {{ form_row(registrationForm.lastname) }}
@@ -13,6 +14,12 @@
             label: 'Password'
         }) }}
 
-        <button type="submit" class="btn btn-dark">Register</button>
+        <button type="submit" class="btn btn-dark">Enregistrez-vous</button>
     {{ form_end(registrationForm) }}
+    </div>
+    <div class="col-3">
+      <img class="loginlogo mt-0"src="{{ asset('doc/img/block/bl(4).png') }}" alt="block Not logo" style="max-width: 100%"></a>
+    </div>
+ </main>
+
 {% endblock %}

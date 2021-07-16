@@ -3,7 +3,7 @@
 {% block title %}Log in{% endblock %}
 
 {% block body %}
-<main class="row my-5">
+<main class="row d-flex justify-content-around my-5">
 
 <form method="post" class="col-3 mt-5">
     {% if error %}
@@ -43,6 +43,10 @@
     
 
 </form>
-<div class="col-3"><img class="loginlogo mt-0"src="{{ asset('doc/img/block/bl(4).png') }}" alt="block Not logo" style="max-width: 100%"></div>
+
+<div class="col-3">
+    <h2 class="my-0 py-0">Créez votre compte</h2>
+    <a href="{{ path('app_register') }} "><img class="loginlogo mt-0"src="{{ asset('doc/img/block/bl(4).png') }}" alt="block Not logo" style="max-width: 100%"></a>
+</div>
 </main>
 {% endblock %}

@@ -30,8 +30,20 @@ class UserFixtures extends Fixture
            ));
            $manager->persist($user);
 
+           $user2 = new Users();
+           $user2->setEmail("StanislasBorrowitz@norimmo.com");
+           $user2->setFirstname("Stanislas");
+           $user2->setLastname("Borrowitz");
+           $user2->setPassword($this->passwordHasher->hashPassword(
+            $user2,
+            '123456'
+           ));
+           $manager->persist($user2);
+
         $manager->flush();
         $this->addReference("Philippe", $user);
+        $this->addReference("Stan", $user2);
+
 
     }
     
