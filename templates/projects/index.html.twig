@@ -3,11 +3,12 @@
 {% block title %}Project index{% endblock %}
 
 {% block body %}
+
     <div class="row justify-content-center">
          <h1 class="my-4 col-4">Vos projets en cours</h1>
     </div>
 
-{#      Pour afficher les message Flash de l'util en session
+{#      Pour afficher les messages Flash de l'util en session
  #}    {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ label }}">
@@ -16,23 +17,59 @@
         {% endfor %}
     {% endfor %}
 
-      {% for project in projects %}
+ {#  Section in JS accordion #}
+
+    {% for project in projects %}
+            <section class="accordion shadow-lg bg-body rounded mb-3">
+                <form method="post" action="{{ path('projects_delete', {'id': project.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ project.id) }}">
+                    <button class="btn btn-outline-danger float-end">Supprimer</button>
+                </form>
+                <div>Type : {{ project.title }}</div>
+                <div>Achèvement : {{ project.end ? project.end|date('d-m-Y') : '' }}</div>
+
+            </section>
+    
+            <div class="panel shadow-lg pbg-body rounded mb-5 border-bottom border-secondary">
+                <h3 class="text-center">Détails</h3>        
+                <div>Statut : {{ project.status }}</div>
+                <div>Début : {{ project.beginning ? project.beginning|date('d-m-Y') : '' }}</div>
+                <div>Description : {{ project.content }}</div>
+                <div>Archivé : {{ project.archived }}</div>
+                <div>
+                    <a class="btn btn-outline-dark mb-2" href="{{ path('projects_show', {'id': project.id}) }}">Détails & tâches</a>
+                    <a class="btn btn-outline-dark mb-2" href="{{ path('projects_edit', {'id': project.id}) }}">Modifier projet</a>
+                </div>
+            </div>        
+    
+        {% else %}
+            <tr>
+                <td colspan="8">Pas de projet en cours</td>
+            </tr>
+         </section>
+
+        {% endfor %}
+        <a class="btn btn-outline-dark col-4 mb-5" href="{{ path('projects_new') }}">Ajouter un nouveau projet</a>
+
+{#     Section with no JS
+ #} 
+ 
+      {# {% for project in projects %}
             <section class="projecthome shadow-lg p-3 mb-5 bg-body rounded">
                 <form method="post" action="{{ path('projects_delete', {'id': project.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet?');">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ project.id) }}">
                     <button class="btn btn-outline-danger float-end">Supprimer</button>
                 </form>
                 <div>Début : {{ project.beginning ? project.beginning|date('d-m-Y') : '' }}</div>
-                <div>Status : {{ project.status }}</div>
+                <div>Statut : {{ project.status }}</div>
                 <div>Achèvement : {{ project.end ? project.end|date('d-m-Y') : '' }}</div>
                 <div>Type : {{ project.title }}</div>
-                <div>Déscription : {{ project.content }}</div>
+                <div>Description : {{ project.content }}</div>
                 <div>Archivé : {{ project.archived }}</div>
                 <div>
                     <a class="btn btn-outline-dark" href="{{ path('projects_show', {'id': project.id}) }}">Détails & tâches</a>
                     <a class="btn btn-outline-dark" href="{{ path('projects_edit', {'id': project.id}) }}">Modifier projet</a>
                 </div>
-                
             </section>
         {% else %}
             <tr>
@@ -41,6 +78,6 @@
          </section>
 
         {% endfor %}
-        <a class="btn btn-outline-dark col-4 " href="{{ path('projects_new') }}">Ajouter un nouveau projet</a>
+        <a class="btn btn-outline-dark col-4 " href="{{ path('projects_new') }}">Ajouter un nouveau projet</a> #}
 
      {% endblock %}

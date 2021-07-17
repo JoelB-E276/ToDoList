@@ -10,9 +10,33 @@ img.img-fluid:nth-child(2){
     height: 18vh;
 }
 
-section{
-background-color: crimson;
-    }
+/* ////////////// ACCORDION  //////////////*/
+.accordion {
+    background-color: #eee;
+    color: rgb(32, 32, 32);
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    transition: 1s;
+  }
+    
+  .panel {
+    padding: 0 18px;
+    background-color: rgb(255, 255, 255);
+    display: none;
+    overflow: hidden;
+  }
+
+
+
+
+
+
+
+
+
+
 
 @media screen and (min-width: 200px) and (max-width: 640px) {
 img.img-fluid:nth-child(1){
@@ -35,4 +59,4 @@ img.img-fluid:nth-child(2){
         height: 18vh;
     
     }
-    }
+}

@@ -33,6 +33,7 @@ class Project
 
     /**
      * @ORM\Column(type="date")
+     * @ORM\OrderBy({"end" = "ASC"})
      */
     private $end;
 
@@ -52,7 +53,7 @@ class Project
     private $archived;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Users::class)
+     * @ORM\ManyToOne(targetEntity=Users::class,inversedBy="projects")
      * @ORM\JoinColumn(nullable=false)
      */
     private $Users;

@@ -19,15 +19,15 @@ class NewProjectType extends AbstractType
         $builder
         
             ->add('beginning', DateType::class, array(
-                'label' => "Modifier la date de commencement",
+                'label' => "Date de commencement",
                 'widget' => 'single_text'))
             ->add('end', DateType::class, array(
                 'label' => "Date d'achèvement",
                 'widget' => 'single_text'))
             ->add('title', null, [
-                'label' => "Type"])
+                'label' => "Nom du projet"])
             ->add('content', null, [
-                  'label' => "Déscription"])
+                  'label' => "Description"])
             ->add('status', ChoiceType::class, [
                     'choices'  => [
                         'En cours' => 'En cours',

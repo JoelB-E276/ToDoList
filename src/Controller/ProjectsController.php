@@ -24,18 +24,36 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/projects')]
 class ProjectsController extends AbstractController
 {
+    //test function getProjectByOrder
+    
     #[Route('/', name: 'projects_index', methods: ['GET'])]
-    public function index(ProjectRepository $projectRepository): Response
+    public function getProjectByOrder(ProjectRepository $projectRepository): Response
     {
+        $projects = $this->getUser()->getProjects();
+
         return $this->render('projects/index.html.twig', [
-            'projects' => $projectRepository->findAll(),
+            'projects' => $projects,
         ]);
     }
 
+    
+    
+    
+    
+  /*   #[Route('/', name: 'projects_index', methods: ['GET'])]
+    public function index(ProjectRepository $projectRepository): Response
+    {
+        $projects = $this->getUser()->getProjects();
+
+        return $this->render('projects/index.html.twig', [
+            'projects' => $projects,
+        ]);
+    }
+ */
 
     // Création d'un projet
     #[Route('/new', name: 'projects_new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    public function newProject(Request $request): Response
     {
         $project = new Project();
         $form = $this->createForm(NewProjectType::class, $project);
@@ -88,8 +106,6 @@ class ProjectsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
-            $project->setStatus("en cours");
-            $project->setArchived("non");
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($project);
             $entityManager->flush();

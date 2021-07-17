@@ -11,10 +11,10 @@
                     <button class="btn btn-outline-danger float-end">Supprimer projet</button>
                 </form>
                 <div>Début : {{ project.beginning ? project.beginning|date('d-m-Y') : '' }}</div>
-                <div>Status : {{ project.status }}</div>
+                <div>Statut : {{ project.status }}</div>
                 <div>Achèvement : {{ project.end ? project.end|date('d-m-Y') : '' }}</div>
                 <div>Type : {{ project.title }}</div>
-                <div>Déscription : {{ project.content }}</div>
+                <div>Description : {{ project.content }}</div>
                 <div>Archivé : {{ project.archived }}</div>
                 <div>
                     <a class="btn btn-outline-dark" href="{{ path('projects_edit', {'id': project.id}) }}">Modifier projet</a>
@@ -22,7 +22,7 @@
                 
             </section>
 
-    <h2 class="text-center">Tâche associé</h2>
+    <h2 class="text-center">Tâche associée</h2>
 
        {% for task in tasks %}
             <section class="task shadow-lg p-3 mb-5 bg-body rounded secondary" id="task">
@@ -31,28 +31,34 @@
                     <button class="btn btn-outline-danger float-end">Supprimer tâche</button>
                 </form>
                 <div>Début : {{ task.beginning ? task.beginning|date('d-m-Y') : '' }}</div>
-                <div>Status : {{ task.status }}</div>
+                {% if task.status == "Terminé"  %}
+                <div class="text-danger">Statut : {{ task.status }}</div>
+                    {% else %}
+                <div>Statut : {{ task.status }}</div>
+                {% endif %}
                 <div>Achèvement : {{ task.end ? task.end|date('d-m-Y') : '' }}</div>
                 <div>Type : {{ task.title }}</div>
-                <div>Déscription : {{ task.content }}</div>
+                <div>Description : {{ task.content }}</div>
                 <div>
                    {#  <a href="{{ path('projects_show', {'id':task.id}) }}">show</a> #}
-{#                     <a class="btn btn-outline-dark" href="{{ path('task_edit', {'id': task.id}) }}">Modifier la tâche</a>
- #}                </div>
+                    <a class="btn btn-outline-dark" href="{{ path('task_edit', {'id': task.id}) }}">Modifier la tâche</a>
+                </div>
             </section>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="8">Pas de tâche pour ce projet</td>
             </tr>
-         </section> 
+{#             <a class="btn btn-outline-dark" href="{{ path('task_edit', {'id': task.id}) }}">Modifier la tâche</a>
+ #}
+           </section> 
 
         {% endfor %}
-   {#      <a class="btn btn-outline-dark" href="{{ path('task_edit', {'id': task.id}) }}"></a>
+{#    {#      <a class="btn btn-outline-dark" href="{{ path('task_edit', {'id': task.id}) }}"></a>
+ #}
 
+    <a class="btn btn-outline-dark mb-5" href="{{ path('projects_index') }}">Retour</a>
 
-    <a href="{{ path('projects_index') }}">back to list</a>
-
-    <a href="{{ path('projects_edit', {'id': project.id}) }}">edit</a>
-
-    {{ include('projects/_delete_form.html.twig') }} #}
-{% endblock %} 
+{#     <a href="{{ path('projects_edit', {'id': project.id}) }}">edit</a>
+ #}
+{#     {{ include('projects/_delete_form.html.twig') }} 
+ #}{% endblock %} 

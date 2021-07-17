@@ -74,7 +74,7 @@ class ProjectsFixtures extends Fixture  implements DependentFixtureInterface
          ///////////TASK///////////
            $task1 = new Task();
            $task1->setBeginning(new \DateTime());
-           $task1->setStatus("En cours");
+           $task1->setStatus("Terminé");
            $task1->setEnd(new \DateTime ("2021-12-11 00:00:00"));
            $task1->setTitle("Fournitures Cavalier ");
            $task1->setContent("Contact fournisseurs devis fenêtres");
