@@ -42,6 +42,7 @@
                 <div>
                    {#  <a href="{{ path('projects_show', {'id':task.id}) }}">show</a> #}
                     <a class="btn btn-outline-dark" href="{{ path('task_edit', {'id': task.id}) }}">Modifier la tâche</a>
+                    <a class="btn btn-outline-dark ml-3 col-1" href="{{ path('task_new', {'id': project.id}) }}">Ajouter</a>
                 </div>
             </section>
         {% else %}
@@ -55,8 +56,11 @@
         {% endfor %}
 {#    {#      <a class="btn btn-outline-dark" href="{{ path('task_edit', {'id': task.id}) }}"></a>
  #}
-
-    <a class="btn btn-outline-dark mb-5" href="{{ path('projects_index') }}">Retour</a>
+ <div class="container">
+    <div class="row justify-content-start">
+        <a class="btn btn-outline-dark mb-5 col-1" href="{{ path('projects_index') }}">Retour</a>
+    </div>
+ </div>   
 
 {#     <a href="{{ path('projects_edit', {'id': project.id}) }}">edit</a>
  #}
