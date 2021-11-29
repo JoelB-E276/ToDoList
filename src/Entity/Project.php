@@ -2,7 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\UsersRepository;
+use App\Repository\TaskRepository;
 use App\Repository\ProjectRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,6 +33,7 @@ class Project
 
     /**
      * @ORM\Column(type="date")
+     * @ORM\OrderBy({"end" = "ASC"})
      */
     private $end;
 
@@ -48,10 +53,21 @@ class Project
     private $archived;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Users::class)
+     * @ORM\ManyToOne(targetEntity=Users::class,inversedBy="projects")
      * @ORM\JoinColumn(nullable=false)
      */
     private $Users;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="project", orphanRemoval=true)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $tasks;
+
+    public function __construct()
+    {
+        $this->Task = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -138,6 +154,36 @@ class Project
     public function setUsers(?Users $Users): self
     {
         $this->Users = $Users;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Task[]
+     */
+    public function getTask(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+            $task->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): self
+    {
+        if ($this->Task->removeElement($task)) {
+            // set the owning side to null (unless already changed)
+            if ($task->getProject() === $this) {
+                $task->setProject(null);
+            }
+        }
 
         return $this;
     }

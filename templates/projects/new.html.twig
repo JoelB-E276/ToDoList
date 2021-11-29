@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Project{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-4">Ajouter un nouveau projet</h1>
+
+ {{ form_start(form) }}
+
+        {{ form_row(form.beginning) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.content) }}
+        {{ form_row(form.end) }}
+        {{ form_row(form.status) }}
+        {{ form_row(form.archived) }}
+        {{ form_row(form.Ajouter) }}
+
+     {{ form_end(form) }}
+
+    <a href="{{ path('projects_index') }}">back to list</a>
+{% endblock %}

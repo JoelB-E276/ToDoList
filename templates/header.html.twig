@@ -1,0 +1,18 @@
+<header class="bg-dark my-0 py-2 px-4">
+    <div class="container">
+        <div class="row">
+        <a><img class="img-fluid headerLogobl" src="{{ asset('doc/img/block/bl(4).png') }}" alt="blocknot logo" style="max-width: 100% ">
+
+        <img class="img-fluid rounded float-end headerLogo"src="{{ asset('doc/img/nor/nor(6).png') }}" alt="norImmo logo" style="max-width: 100%"></a>
+
+        <div>
+            {# On conditionne l'affiche du boutton à la présence d'un utilisateur connecté #}
+            {% if app.user %}
+                <a href="{{path('app_logout')}}" class="btn btn-outline-secondary text-white float-end me-2">Deconnexion</a>
+            {% else %}
+                <a href="{{path('app_login')}}" class="btn btn-outline-danger text-white float-end me-2">Connexion</a>
+            {% endif %}
+            </div>
+        </div>
+    </div> 
+</header>

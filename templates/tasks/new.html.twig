@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle tâche{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-4">Ajouter une nouvelle tâche</h1>
+
+ {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.beginning) }}
+        {{ form_row(form.content) }}
+        {{ form_row(form.end) }}
+        {{ form_row(form.status) }}
+
+     {{ form_end(form) }}
+
+    <a class="btn btn-outline-dark mb-5" href="{{ path('projects_index') }}">Retour</a>
+{% endblock %}

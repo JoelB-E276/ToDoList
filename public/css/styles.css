@@ -1,0 +1,62 @@
+body{
+    background-color:rgb(247, 247, 247);
+}
+
+img.img-fluid:nth-child(1){
+    width: 25vw;
+}
+img.img-fluid:nth-child(2){
+    width: 10vw;
+    height: 18vh;
+}
+
+/* ////////////// ACCORDION  //////////////*/
+.accordion {
+    background-color: #eee;
+    color: rgb(32, 32, 32);
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    transition: 1s;
+  }
+    
+  .panel {
+    padding: 0 18px;
+    background-color: rgb(255, 255, 255);
+    display: none;
+    overflow: hidden;
+  }
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (min-width: 200px) and (max-width: 640px) {
+img.img-fluid:nth-child(1){
+     max-width: 35vw;
+}
+img.img-fluid:nth-child(2){
+   max-width: 30vw;
+   max-height: 18vh;
+
+}
+}
+
+
+@media screen and (min-width: 640px) and (max-width: 900px) {
+    img.img-fluid:nth-child(1){
+         width: 55vw;
+    }
+    img.img-fluid:nth-child(2){
+        width: 30vw;
+        height: 18vh;
+    
+    }
+}

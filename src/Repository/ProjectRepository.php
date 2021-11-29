@@ -22,8 +22,19 @@ class ProjectRepository extends ServiceEntityRepository
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+
+    public function getEnd()
+    {
+        return $this->createQueryBuilder('p')
+        ->orderBy('p.end', 'ASC')
+        ->getQuery()
+        ->getResult()
+
+
+        ;
+    }
+  /*  public function findByExampleField($value)
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')
